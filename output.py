@@ -16,3 +16,10 @@ def print_top_frequency(rows: list[MerchantFrequencySummaryRow]) -> None:
     print("-" * 42)
     for index, row in enumerate(rows, start=1):
         print(f"{index:<6}{row['merchant'][:27]:<28}{row['count']:>8}")
+
+def print_top_spend(rows: list[MerchantSpendSummaryRow]) -> None:
+    print("Top merchants by spend")
+    print(f"{'Rank':<6}{'Merchant':<28}{'Total':>14}")
+    print("-" * 48)
+    for index, row in enumerate(rows, start=1):
+        print(f"{index:<6}{row['merchant'][:27]:<28}{format_money(row['total']):>14}")
