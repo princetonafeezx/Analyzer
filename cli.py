@@ -92,29 +92,28 @@ def _build_parser() -> argparse.ArgumentParser:
 
     return parser
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def main(argv: list[str] | None = None) -> int:
-    pass
+    parser = _build_parser()
+    args = parser.parse_args(argv)
+
+    try:
+        config = load_merged_config(explicit=args.config)
+    except (OSError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    if args.payday is not None:
+        if not 1 <= args.payday <= 28:
+            print("error: --payday must be between 1 and 28.", file=sys.stderr)
+            return 1
+        config = AppConfig(payday=args.payday, default_csv=config.default_csv)
+
+    if args.command is None:
+        return _cmd_menu(args, config)
+
+    func: Callable[[argparse.Namespace, AppConfig], int] = args.func
+    return func(args, config)
+
 
 if __name__ == "__main__":
     entrypoint()
