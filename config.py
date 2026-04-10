@@ -23,3 +23,24 @@ def _overlay_from_file(cfg: AppConfig, path: Path) -> None:
 def _validate_payday(n: int) -> None:
     if not 1 <= n <= 28:
         raise ValueError(f"payday must be between 1 and 28, got {n}")
+
+def load_merged_config(*, explicit: Path | None = None) -> AppConfig:
+    cfg = AppConfig()
+    if explicit is not None:
+        if not explicit.is_file():
+            raise FileNotFoundError(f"Config file not found: {explicit}")
+        _overlay_from_file(cfg, explicit)
+        _validate_payday(cfg.payday)
+        return cfg
+
+    local = Path.cwd() / "analyzer.toml"
+    if local.is_file():
+        _overlay_from_file(cfg, local)
+    env_path = (os.environ.get("LL_ANALYZER_CONFIG") or "").strip()
+    if env_path:
+        p = Path(env_path).expanduser()
+        if p.is_file():
+            _overlay_from_file(cfg, p)
+
+    _validate_payday(cfg.payday)
+    return cfg
