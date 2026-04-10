@@ -119,3 +119,11 @@ def _pick_column(
         return None
     taken.add(best_i)
     return best_i
+
+def _fallback_slot(preferred: int, column_count: int, taken: set[int]) -> int | None:
+    if preferred < column_count and preferred not in taken:
+        return preferred
+    for j in range(column_count):
+        if j not in taken:
+            return j
+    return None
