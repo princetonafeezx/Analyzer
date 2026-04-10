@@ -53,3 +53,22 @@ def _score_amount(norm: str, tokens: set[str]) -> float:
     if norm == "total" or tokens == {"total"}:
         return 5.0
     return 0.0
+
+def _score_subcategory(norm: str, tokens: set[str]) -> float:
+    compact = re.sub(r"[\s_-]+", "", norm)
+    if re.fullmatch(r"subcategory|subcat", compact) or "subcategory" in compact:
+        return 15.0
+    if "sub" in tokens and "category" in tokens:
+        return 13.0
+    if "sub" in tokens and "cat" in tokens:
+        return 10.0
+    for phrase in (
+        "child category",
+        "detail category",
+        "line category",
+        "secondary category",
+        "sub category",
+    ):
+        if phrase in norm:
+            return 12.0
+    return 0.0
