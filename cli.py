@@ -18,6 +18,36 @@ def _cmd_version(_args: argparse.Namespace, _config: AppConfig) -> int:
     print(v)
     return 0
 
+def _cmd_menu(_args: argparse.Namespace, config: AppConfig) -> int:
+    from menu import menu
+
+    menu(initial_payday=config.payday)
+    return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def main(argv: list[str] | None = None) -> int:
