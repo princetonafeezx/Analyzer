@@ -1,6 +1,5 @@
-# Prefer installing from pyproject.toml:
-#   pip install -e ".[dev]"
+# Prefer installing from the project root:
+#   pip install .
 #
-# Direct install from this file (production + dev tools):
+# Or install runtime dependencies only:
 typing_extensions>=4.12.0
-pytest>=8.0.0
