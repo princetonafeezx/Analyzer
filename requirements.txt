@@ -1,5 +1,6 @@
 # Prefer installing from the project root:
 #   pip install .
+#   pip install -e ".[dev]"   # includes pytest
 #
 # Or install runtime dependencies only:
 typing_extensions>=4.12.0
