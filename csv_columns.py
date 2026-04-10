@@ -27,3 +27,16 @@ def _score_date(norm: str, tokens: set[str]) -> float:
     if "date" in tokens:
         return 9.0
     return 0.0
+    
+def _score_merchant(norm: str, tokens: set[str]) -> float:
+    if norm in {"payee", "merchant", "vendor", "memo", "description", "narration"}:
+        return 14.0
+    for word in ("payee", "merchant", "vendor", "description", "memo", "narration", "counterparty"):
+        if word in norm:
+            return 11.0
+    hits = tokens & {"payee", "merchant", "vendor", "memo", "description", "narration"}
+    if hits:
+        return 10.0
+    if tokens == {"name"} or (tokens <= {"name", "merchant"} and "name" in tokens):
+        return 7.0
+    return 0.0
