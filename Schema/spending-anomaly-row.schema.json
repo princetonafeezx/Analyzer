@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "spending-anomaly-row.schema.json",
+  "title": "SpendingAnomalyRow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "merchant": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string"
+    },
+    "category_average": {
+      "type": "number"
+    },
+    "multiple": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  },
+  "required": [
+    "date",
+    "merchant",
+    "amount",
+    "category",
+    "category_average",
+    "multiple"
+  ]
+}

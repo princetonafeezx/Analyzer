@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "monthly-trend-row.schema.json",
+  "title": "MonthlyTrendRow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "month": {
+      "type": "string"
+    },
+    "total": {
+      "type": "number"
+    },
+    "trend": {
+      "type": "string",
+      "enum": [
+        "starting point",
+        "up",
+        "down",
+        "flat"
+      ]
+    }
+  },
+  "required": [
+    "month",
+    "total",
+    "trend"
+  ]
+}

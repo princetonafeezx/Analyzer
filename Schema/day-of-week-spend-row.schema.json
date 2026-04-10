@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "day-of-week-spend-row.schema.json",
+  "title": "DayOfWeekSpendRow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "day": {
+      "type": "string"
+    },
+    "total": {
+      "type": "number"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "average": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "day",
+    "total",
+    "count",
+    "average"
+  ]
+}

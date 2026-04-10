@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reconciliation-pair.schema.json",
+  "title": "ReconciliationPair",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "$ref": "reconciliation-record.schema.json"
+    },
+    "reference": {
+      "$ref": "reconciliation-record.schema.json"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reason": {
+      "type": "string"
+    },
+    "amount_delta": {
+      "type": "number"
+    },
+    "date_gap": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "source",
+    "reference",
+    "confidence",
+    "reason",
+    "amount_delta",
+    "date_gap"
+  ]
+}

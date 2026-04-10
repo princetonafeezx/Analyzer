@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "analyzer-config.schema.json",
+  "title": "AnalyzerConfig",
+  "description": "TOML configuration keys described in the repository README.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "payday": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 28
+    },
+    "default_csv": {
+      "type": "string",
+      "description": "Optional path to a categorized CSV file."
+    }
+  }
+}

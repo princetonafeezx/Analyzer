@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "duplicate-exact-item.schema.json",
+  "title": "DuplicateExactItem",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "record": {
+      "$ref": "reconciliation-record.schema.json"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 2
+    }
+  },
+  "required": [
+    "record",
+    "count"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "weekend-weekday-summary.schema.json",
+  "title": "WeekendWeekdaySummary",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "weekend_total": {
+      "type": "number"
+    },
+    "weekday_total": {
+      "type": "number"
+    },
+    "weekend_avg": {
+      "type": "number"
+    },
+    "weekday_avg": {
+      "type": "number"
+    },
+    "percentage_difference": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "weekend_total",
+    "weekday_total",
+    "weekend_avg",
+    "weekday_avg",
+    "percentage_difference"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "analysis-report.schema.json",
+  "title": "AnalysisReport",
+  "description": "Return value of metrics.run_all_reports.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "top_by_frequency": {
+      "type": "array",
+      "items": {
+        "$ref": "merchant-frequency-summary-row.schema.json"
+      }
+    },
+    "top_by_spend": {
+      "type": "array",
+      "items": {
+        "$ref": "merchant-spend-summary-row.schema.json"
+      }
+    },
+    "day_of_week": {
+      "type": "array",
+      "items": {
+        "$ref": "day-of-week-spend-row.schema.json"
+      }
+    },
+    "weekend_vs_weekday": {
+      "$ref": "weekend-weekday-summary.schema.json"
+    },
+    "time_of_month": {
+      "$ref": "time-of-month-split.schema.json"
+    },
+    "monthly_trends": {
+      "type": "array",
+      "items": {
+        "$ref": "monthly-trend-row.schema.json"
+      }
+    },
+    "anomaly_report": {
+      "$ref": "anomaly-report.schema.json"
+    }
+  },
+  "required": [
+    "record_count",
+    "top_by_frequency",
+    "top_by_spend",
+    "day_of_week",
+    "weekend_vs_weekday",
+    "time_of_month",
+    "monthly_trends",
+    "anomaly_report"
+  ]
+}

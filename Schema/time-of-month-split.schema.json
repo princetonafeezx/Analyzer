@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "time-of-month-split.schema.json",
+  "title": "TimeOfMonthSplit",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "pre_payday_total": {
+      "type": "number"
+    },
+    "pre_payday_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "post_payday_total": {
+      "type": "number"
+    },
+    "post_payday_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "pre_payday_total",
+    "pre_payday_count",
+    "post_payday_total",
+    "post_payday_count"
+  ]
+}

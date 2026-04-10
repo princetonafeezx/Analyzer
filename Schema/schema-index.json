@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Analyzer Schema Index",
+  "description": "Simple manifest of the schema files included in this folder.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "schemas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "version",
+    "schemas"
+  ],
+  "examples": [
+    {
+      "version": "1.0.0",
+      "schemas": [
+        "categorized-record.schema.json",
+        "classification-result.schema.json",
+        "analysis-report.schema.json",
+        "reconciliation-report.schema.json",
+        "duplicate-detection-result.schema.json",
+        "run-reconciliation-result.schema.json",
+        "analyzer-config.schema.json"
+      ]
+    }
+  ]
+}
