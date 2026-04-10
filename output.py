@@ -23,3 +23,10 @@ def print_top_spend(rows: list[MerchantSpendSummaryRow]) -> None:
     print("-" * 48)
     for index, row in enumerate(rows, start=1):
         print(f"{index:<6}{row['merchant'][:27]:<28}{format_money(row['total']):>14}")
+
+def print_day_breakdown(rows: list[DayOfWeekSpendRow]) -> None:
+    print("Day-of-week breakdown")
+    print(f"{'Day':<12}{'Count':>8}{'Total':>16}{'Average':>16}")
+    print("-" * 52)
+    for row in rows:
+        print(f"{row['day']:<12}{row['count']:>8}{format_money(row['total']):>16}{format_money(row['average']):>16}")
