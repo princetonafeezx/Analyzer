@@ -59,8 +59,38 @@ def _cmd_analyze(args: argparse.Namespace, config: AppConfig) -> int:
     print_full_analysis(report, duplicate_count=len(duplicate_records))
     return 0
 
+def _build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="ll-analyzer",
+        description="Financial pattern detector — spending reports from categorized transactions.",
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        metavar="PATH",
+        help="TOML config file (if omitted: ./analyzer.toml then $LL_ANALYZER_CONFIG)",
+    )
+    parser.add_argument(
+        "--payday",
+        type=int,
+        metavar="N",
+        help="Payday as day of month 1–28 (overrides config file)",
+    )
 
+    sub = parser.add_subparsers(dest="command", metavar="COMMAND")
 
+    p_menu = sub.add_parser("menu", help="Interactive text menu (default)")
+    p_menu.set_defaults(func=_cmd_menu)
+
+    p_an = sub.add_parser("analyze", help="Print full analysis report to stdout")
+    g = p_an.add_mutually_exclusive_group()
+    g.add_argument("--csv", type=Path, metavar="PATH", help="Categorized CSV file")
+    g.add_argument("--mock", action="store_true", help="Use built-in mock transactions")
+    p_an.set_defaults(func=_cmd_analyze)
+
+    sub.add_parser("version", help="Print package version").set_defaults(func=_cmd_version)
+
+    return parser
 
 
 
