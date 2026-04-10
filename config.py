@@ -20,3 +20,6 @@ def _overlay_from_file(cfg: AppConfig, path: Path) -> None:
     if raw.get("default_csv"):
         cfg.default_csv = str(raw["default_csv"]).strip() or None
 
+def _validate_payday(n: int) -> None:
+    if not 1 <= n <= 28:
+        raise ValueError(f"payday must be between 1 and 28, got {n}")
