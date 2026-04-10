@@ -27,7 +27,7 @@ def _score_date(norm: str, tokens: set[str]) -> float:
     if "date" in tokens:
         return 9.0
     return 0.0
-    
+
 def _score_merchant(norm: str, tokens: set[str]) -> float:
     if norm in {"payee", "merchant", "vendor", "memo", "description", "narration"}:
         return 14.0
@@ -39,4 +39,17 @@ def _score_merchant(norm: str, tokens: set[str]) -> float:
         return 10.0
     if tokens == {"name"} or (tokens <= {"name", "merchant"} and "name" in tokens):
         return 7.0
+    return 0.0
+
+def _score_amount(norm: str, tokens: set[str]) -> float:
+    if norm in {"amount", "amt", "debit", "credit"}:
+        return 14.0
+    if "amount" in tokens:
+        return 12.0
+    if tokens <= {"debit", "credit", "amount"} and (tokens & {"debit", "credit"}):
+        return 10.0
+    if norm == "total amount" or ("total" in tokens and "amount" in tokens):
+        return 11.0
+    if norm == "total" or tokens == {"total"}:
+        return 5.0
     return 0.0
