@@ -57,3 +57,31 @@ def print_anomalies(report: AnomalyReport) -> None:
         )
     print()
     print(f"Affected categories: {', '.join(sorted(report['affected_categories']))}")
+
+def print_full_analysis(report: AnalysisReport, duplicate_count: int = 0) -> None:
+    print_top_frequency(report["top_by_frequency"])
+    print()
+    print_top_spend(report["top_by_spend"])
+    print()
+    print_day_breakdown(report["day_of_week"])
+    print()
+
+    weekend = report["weekend_vs_weekday"]
+    print(
+        "Weekend vs weekday average spend: "
+        f"{format_money(weekend['weekend_avg'])} vs {format_money(weekend['weekday_avg'])} "
+        f"({weekend['percentage_difference']:.1f}% difference)"
+    )
+
+    time_split = report["time_of_month"]
+    print(
+        "Time of month split: "
+        f"pre-payday {format_money(time_split['pre_payday_total'])} "
+        f"vs post-payday {format_money(time_split['post_payday_total'])}"
+    )
+    print()
+    print_monthly_trends(report["monthly_trends"])
+    print()
+    print_anomalies(report["anomaly_report"])
+    print()
+    print(f"Duplicate transactions skipped during load: {duplicate_count}")
