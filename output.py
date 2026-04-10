@@ -37,3 +37,23 @@ def print_monthly_trends(rows: list[MonthlyTrendRow]) -> None:
     print("-" * 40)
     for row in rows:
         print(f"{row['month']:<10}{format_money(row['total']):>16}{row['trend']:>12}")
+
+def print_anomalies(report: AnomalyReport) -> None:
+    anomalies = report["anomalies"]
+    if not anomalies:
+        print("No anomalies crossed the 3x category average threshold.")
+        return
+
+    print("Anomalies")
+    print(f"{'Date':<12}{'Merchant':<26}{'Amount':>12}{'Avg':>12}{'X Over':>10}")
+    print("-" * 72)
+    for row in anomalies:
+        print(
+            f"{row['date'].isoformat():<12}"
+            f"{row['merchant'][:25]:<26}"
+            f"{format_money(row['amount']):>12}"
+            f"{format_money(row['category_average']):>12}"
+            f"{row['multiple']:>10.2f}"
+        )
+    print()
+    print(f"Affected categories: {', '.join(sorted(report['affected_categories']))}")
