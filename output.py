@@ -30,3 +30,10 @@ def print_day_breakdown(rows: list[DayOfWeekSpendRow]) -> None:
     print("-" * 52)
     for row in rows:
         print(f"{row['day']:<12}{row['count']:>8}{format_money(row['total']):>16}{format_money(row['average']):>16}")
+
+def print_monthly_trends(rows: list[MonthlyTrendRow]) -> None:
+    print("Monthly trend tracking")
+    print(f"{'Month':<10}{'Total Spend':>16}{'Trend':>12}")
+    print("-" * 40)
+    for row in rows:
+        print(f"{row['month']:<10}{format_money(row['total']):>16}{row['trend']:>12}")
