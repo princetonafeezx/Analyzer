@@ -12,13 +12,13 @@ From the repository root:
 pip install .
 ```
 
-Editable install for development:
+Editable install for development (includes pytest):
 
 ```bash
-pip install -e .
+pip install -e ".[dev]"
 ```
 
-This installs the **`ll-analyzer`** command and registers the **`analysis`** package (plus root modules such as `schemas`, `parsing`, `categorizer`, `storage`, `textutil`).
+This installs the **`ll-analyzer`** command and top-level modules in this repo (`cli`, `metrics`, `parsing`, `schemas`, `categorizer`, `storage`, …) via setuptools **`py-modules`**.
 
 Runtime dependencies are listed in **`pyproject.toml`** and mirrored in **`requirements.txt`**.
 
@@ -55,8 +55,8 @@ ll-analyzer version
 ll-analyzer --payday 1 menu
 ll-analyzer analyze --mock
 ll-analyzer analyze --csv ./exports/categorized.csv
-python -m analysis.cli analyze --mock
-python -m analysis          # interactive menu; reads config for default payday
+python -m cli analyze --mock
+python -m menu              # interactive menu; reads config for default payday
 ```
 
 ## Configuration
@@ -82,10 +82,11 @@ Persisted CSV/JSON/report paths use **`ANALYZER_DATA_DIR`** when set, otherwise 
 ## Development
 
 ```bash
-pip install -e .
+pip install -e ".[dev]"
+python -m pytest tests/ -q
 ```
 
-Dependencies are declared in **`pyproject.toml`**. **`requirements.txt`** mirrors the runtime dependency line for environments that prefer a requirements file.
+Dependencies are declared in **`pyproject.toml`** (`[project.optional-dependencies] dev` for pytest). **`requirements.txt`** mirrors the runtime dependency line for environments that prefer a requirements file.
 
 ---
 
@@ -119,4 +120,4 @@ Dependencies are declared in **`pyproject.toml`**. **`requirements.txt`** mirror
 
 **Implementation**
 
-- Root modules (`parsing`, `categorizer`, `storage`, `textutil`, …) and an **`analysis`** package for metrics, I/O, output formatters, optional TOML config, and the argparse CLI (`ll-analyzer` entry point)
+- Flat layout under the repo root: parsing, schemas, categorizer, storage, textutil, metrics, CSV I/O, output formatters, optional TOML config, and the argparse CLI (`ll-analyzer` entry point)
