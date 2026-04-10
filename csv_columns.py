@@ -72,3 +72,29 @@ def _score_subcategory(norm: str, tokens: set[str]) -> float:
         if phrase in norm:
             return 12.0
     return 0.0
+
+
+def _score_category(norm: str, tokens: set[str]) -> float:
+    if _score_subcategory(norm, tokens) >= 10.0:
+        return 0.0
+    for exact in (
+        "category",
+        "expense category",
+        "transaction category",
+        "main category",
+        "parent category",
+        "top category",
+        "primary category",
+    ):
+        if norm == exact:
+            return 14.0
+    for phrase in ("expense type", "transaction type", "classification"):
+        if phrase in norm:
+            return 12.0
+    if "category" in tokens:
+        return 10.0
+    if norm == "type" or tokens == {"type"}:
+        return 8.0
+    if "class" in tokens and "sub" not in tokens:
+        return 6.0
+    return 0.0
