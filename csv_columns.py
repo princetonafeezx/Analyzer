@@ -98,3 +98,24 @@ def _score_category(norm: str, tokens: set[str]) -> float:
     if "class" in tokens and "sub" not in tokens:
         return 6.0
     return 0.0
+
+def _pick_column(
+    headers_norm: list[str],
+    taken: set[int],
+    scorer: Callable[[str, set[str]], float],
+    *,
+    min_score: float,
+) -> int | None:
+    best_i: int | None = None
+    best_s = -1.0
+    for i, header in enumerate(headers_norm):
+        if i in taken:
+            continue
+        score = scorer(header, _header_tokens(header))
+        if score > best_s:
+            best_s = score
+            best_i = i
+    if best_i is None or best_s < min_score:
+        return None
+    taken.add(best_i)
+    return best_i
