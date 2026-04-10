@@ -15,10 +15,12 @@ pip install .
 Editable install for development:
 
 ```bash
-pip install -e ".[dev]"
+pip install -e .
 ```
 
-This installs the **`ll-analyzer`** command and registers the `analysis` package (plus root modules such as `schemas`, `parsing`, …).
+This installs the **`ll-analyzer`** command and registers the **`analysis`** package (plus root modules such as `schemas`, `parsing`, `categorizer`, `storage`, `textutil`).
+
+Runtime dependencies are listed in **`pyproject.toml`** and mirrored in **`requirements.txt`**.
 
 ## Command-line interface
 
@@ -80,11 +82,10 @@ Persisted CSV/JSON/report paths use **`ANALYZER_DATA_DIR`** when set, otherwise 
 ## Development
 
 ```bash
-pip install -e ".[dev]"
-python -m pytest tests/ -q
+pip install -e .
 ```
 
-Dependencies are declared in **`pyproject.toml`**. **`requirements.txt`** mirrors them for environments that prefer a requirements file.
+Dependencies are declared in **`pyproject.toml`**. **`requirements.txt`** mirrors the runtime dependency line for environments that prefer a requirements file.
 
 ---
 
@@ -118,6 +119,4 @@ Dependencies are declared in **`pyproject.toml`**. **`requirements.txt`** mirror
 
 **Implementation**
 
-- Root modules (`parsing`, `categorizer`, `storage`, …) and an **`analysis`** package for metrics, I/O, and output formatters
-- **`ll_analyzer_app`**: argparse CLI, TOML config, `ll-analyzer` entry point
-- Tests: `pytest`; record shapes use `typing_extensions.NotRequired` where needed
+- Root modules (`parsing`, `categorizer`, `storage`, `textutil`, …) and an **`analysis`** package for metrics, I/O, output formatters, optional TOML config, and the argparse CLI (`ll-analyzer` entry point)
