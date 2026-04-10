@@ -127,3 +127,45 @@ def _fallback_slot(preferred: int, column_count: int, taken: set[int]) -> int | 
         if j not in taken:
             return j
     return None
+
+def detect_columns(headers: list[str]) -> dict[str, int | None]:
+    
+    norm = [clean_text(h) for h in headers]
+    n = len(headers)
+    taken: set[int] = set()
+    mapping: dict[str, int | None] = {
+        "date": None,
+        "merchant": None,
+        "amount": None,
+        "category": None,
+        "subcategory": None,
+    }
+
+    mapping["date"] = _pick_column(norm, taken, _score_date, min_score=5.0)
+    mapping["merchant"] = _pick_column(norm, taken, _score_merchant, min_score=5.0)
+    mapping["amount"] = _pick_column(norm, taken, _score_amount, min_score=5.0)
+    mapping["subcategory"] = _pick_column(norm, taken, _score_subcategory, min_score=9.0)
+    mapping["category"] = _pick_column(norm, taken, _score_category, min_score=4.0)
+
+    if mapping["date"] is None and n:
+        slot = _fallback_slot(0, n, taken)
+        if slot is not None:
+            mapping["date"] = slot
+            taken.add(slot)
+    if mapping["merchant"] is None and n > 1:
+        slot = _fallback_slot(1, n, taken)
+        if slot is not None:
+            mapping["merchant"] = slot
+            taken.add(slot)
+    if mapping["amount"] is None and n > 2:
+        slot = _fallback_slot(2, n, taken)
+        if slot is not None:
+            mapping["amount"] = slot
+            taken.add(slot)
+    if mapping["category"] is None and n > 3:
+        slot = _fallback_slot(3, n, taken)
+        if slot is not None:
+            mapping["category"] = slot
+            taken.add(slot)
+
+    return mapping
