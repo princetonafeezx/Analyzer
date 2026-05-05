@@ -1,8 +1,12 @@
-"""Typed public shapes for data flowing between app modules and the CLI.
+"""Typed public shapes for data flowing between LedgerLogic modules and the CLI.
 
-Static-check contracts for :mod:`typing` / type checkers. Rows used in metrics are
-also checked in :func:`records.normalize_analysis_record`.
+These are documentation and static-check contracts; runtime still uses plain dicts.
 """
+
+# PINNED SNAPSHOT — sourced from https://github.com/PrincetonAfeez/ledger-logic
+# This is the original copy of schemas.py pinned at the version that passed
+# the Ledger Logic evaluation. Any updates must be replicated to all repositories within Ledger Logic.
+
 
 from __future__ import annotations
 
@@ -31,7 +35,7 @@ class CategoryRule(TypedDict):
 
 
 class RuleMatchResult(TypedDict):
-    """Output of :func:`categorizer.find_best_rule_match`."""
+    """Output of :func:`ledgerlogic.categorizer.find_best_rule_match`."""
 
     category: str
     subcategory: str
@@ -57,7 +61,7 @@ class CategorizedRecord(TypedDict):
 
 
 class CategorySummaryRow(TypedDict):
-    """One line from :func:`categorizer.summarize_categories`."""
+    """One line from :func:`ledgerlogic.categorizer.summarize_categories`."""
 
     category: str
     total: float
@@ -65,7 +69,7 @@ class CategorySummaryRow(TypedDict):
 
 
 class ClassificationResult(TypedDict):
-    """Return value of :func:`categorizer.run_classification`."""
+    """Return value of :func:`ledgerlogic.categorizer.run_classification`."""
 
     records: list[CategorizedRecord]
     flagged: list[CategorizedRecord]
@@ -90,7 +94,7 @@ class TimeOfMonthSplit(TypedDict):
 
 
 class SpendingAnomalyRow(TypedDict):
-    """One flagged row from :func:`metrics.detect_anomalies`."""
+    """One flagged row from :func:`ledgerlogic.analysis.metrics.detect_anomalies`."""
 
     date: date
     merchant: str
@@ -107,21 +111,21 @@ class AnomalyReport(TypedDict):
 
 
 class MerchantFrequencySummaryRow(TypedDict):
-    """Shape of each row from :func:`metrics.count_by_merchant`."""
+    """Shape of each row from :func:`ledgerlogic.analysis.metrics.count_by_merchant`."""
 
     merchant: str
     count: int
 
 
 class MerchantSpendSummaryRow(TypedDict):
-    """Shape of each row from :func:`metrics.spend_by_merchant`."""
+    """Shape of each row from :func:`ledgerlogic.analysis.metrics.spend_by_merchant`."""
 
     merchant: str
     total: float
 
 
 class DayOfWeekSpendRow(TypedDict):
-    """One weekday bucket from :func:`metrics.day_of_week_breakdown`."""
+    """One weekday bucket from :func:`ledgerlogic.analysis.metrics.day_of_week_breakdown`."""
 
     day: str
     total: float
@@ -130,7 +134,7 @@ class DayOfWeekSpendRow(TypedDict):
 
 
 class MonthlyTrendRow(TypedDict):
-    """One month line from :func:`metrics.monthly_trends`."""
+    """One month line from :func:`ledgerlogic.analysis.metrics.monthly_trends`."""
 
     month: str
     total: float
@@ -138,7 +142,7 @@ class MonthlyTrendRow(TypedDict):
 
 
 class AnalysisReport(TypedDict):
-    """Return value of :func:`metrics.run_all_reports`."""
+    """Return value of :func:`ledgerlogic.analyzer.run_all_reports`."""
 
     record_count: int
     top_by_frequency: list[MerchantFrequencySummaryRow]
@@ -159,7 +163,7 @@ class GreedyTraceStep(TypedDict):
 
 
 class ParsedAmountToCents(TypedDict):
-    """Parsed currency input expressed in cents and dollars."""
+    """Return value of :func:`ledgerlogic.change_maker.parse_amount_to_cents`."""
 
     input_text: str
     cents: int
@@ -168,7 +172,7 @@ class ParsedAmountToCents(TypedDict):
 
 
 class ChangeResult(TypedDict):
-    """Change-making breakdown from a cash-drawer style calculation.
+    """Return value of :func:`ledgerlogic.change_maker.calculate_change`.
 
     Parsing errors raise :class:`ValueError` before a result is returned; every
     successful return includes all keys below.
@@ -189,7 +193,7 @@ class ChangeResult(TypedDict):
 
 
 class InvestmentScenario(TypedDict):
-    """Inputs for compound-growth / investment scenario projection."""
+    """Fields expected by :func:`ledgerlogic.investment.project_scenario`."""
 
     name: str
     initial_principal: float
@@ -203,7 +207,7 @@ class InvestmentScenario(TypedDict):
 
 
 class FinancialReportParams(TypedDict):
-    """Inputs for building a text financial summary report."""
+    """Inputs for :func:`ledgerlogic.report_builder.build_financial_summary_lines`."""
 
     payday: int
     income: float
@@ -215,7 +219,7 @@ class FinancialReportParams(TypedDict):
 
 
 class ProjectionYearRow(TypedDict):
-    """One year of output from an investment projection."""
+    """One year of output from :func:`ledgerlogic.investment.project_scenario`."""
 
     year: int
     starting_balance: float
@@ -228,7 +232,7 @@ class ProjectionYearRow(TypedDict):
 
 
 class ProjectionResult(TypedDict):
-    """Return value of an investment scenario projection."""
+    """Return value of :func:`ledgerlogic.investment.project_scenario`."""
 
     scenario: InvestmentScenario
     rows: list[ProjectionYearRow]
@@ -251,7 +255,7 @@ class BudgetCategoryProfile(TypedDict):
 
 
 class BudgetAllocation(TypedDict):
-    """Return shape from budget ``allocate_*`` style functions."""
+    """Return shape from ``allocate_*`` functions in :mod:`ledgerlogic.budget`."""
 
     strategy: str
     allocations: dict[str, float]
@@ -262,7 +266,7 @@ class BudgetAllocation(TypedDict):
 
 
 class BudgetComparisonRow(TypedDict):
-    """One row from comparing actual spend to a budget."""
+    """One row from :func:`ledgerlogic.budget.compare_actual_to_budget`."""
 
     category: str
     budgeted: float
@@ -275,7 +279,7 @@ class BudgetComparisonRow(TypedDict):
 
 
 class BudgetComparisonResult(TypedDict):
-    """Return value of an actual-vs-budget comparison."""
+    """Return value of :func:`ledgerlogic.budget.compare_actual_to_budget`."""
 
     rows: list[BudgetComparisonRow]
     overages: set[str]
@@ -319,7 +323,7 @@ class ReconciliationSetSummary(TypedDict):
 
 
 class ReconciliationReport(TypedDict):
-    """Return value of a reconciliation between two transaction sets."""
+    """Return value of :func:`ledgerlogic.reconciler.reconcile`."""
 
     matched: list[ReconciliationPair]
     amount_mismatch: list[ReconciliationPair]
@@ -352,14 +356,14 @@ class DuplicateNearItem(TypedDict):
 
 
 class DuplicateDetectionResult(TypedDict):
-    """Output of duplicate detection on reconciled transaction rows."""
+    """Output of :func:`ledgerlogic.reconciler.detect_duplicates`."""
 
     exact: list[DuplicateExactItem]
     near: list[DuplicateNearItem]
 
 
 class RunReconciliationResult(TypedDict):
-    """Return value of an end-to-end reconciliation run."""
+    """Return value of :func:`ledgerlogic.reconciler.run_reconciliation`."""
 
     report: ReconciliationReport
     report_text: str
